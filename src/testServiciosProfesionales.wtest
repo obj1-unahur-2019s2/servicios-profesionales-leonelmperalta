@@ -1,0 +1,104 @@
+import profesionales.*
+import universidad.*
+import empresaDeServicios.*
+
+describe "test etapa 1"{
+	test "profesionales graduados de"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		assert.equals(2, empresa.profesionalesGraduadosDe(UDR))
+		assert.equals(1, empresa.profesionalesGraduadosDe(UNAHUR))
+		assert.equals(0, empresa.profesionalesGraduadosDe(USM))
+		
+	}
+	
+	test "profesionales caros"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		
+		assert.equals(#{rocio} , empresa.profesionalesCaros())
+	}
+	
+	test "universidadesFormadoras"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		assert.equals(#{UDR, UDC, UNAHUR}, empresa.universidadesFormadoras())
+	}
+	
+	test " profesional mas barato"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		assert.equals(juana, empresa.profesionalMasBarato())
+	}
+	test "es de gente acotada"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		assert.that(empresa.esDeGenteAcotada())
+	}
+	
+	test "no es de gente acotada"{
+		var USM = new Universidad(provincia = "Buenos Aires", honorariosRecomendados = 3500)
+		var UDR = new Universidad(provincia = "Santa Fe", honorariosRecomendados = 2800)
+		var UDC = new Universidad(provincia = "Corrientes", honorariosRecomendados = 4200)
+		var UNAHUR = new Universidad(provincia = "BuenosAires", honorariosRecomendados = 8800)
+		
+		var juana = new ProfesionalVinculado(universidad = UDR)
+		var melina = new ProfesionalAsociado(universidad = UDC)
+		var rocio = new ProfesionalLibre(universidad = UNAHUR, honorariosPorHora = 5000, provinciasDondePuedeTrabajar  = #{"SantaFe", "Cordoba" , "Buenos Aires"})
+		var luciana = new ProfesionalLibre(universidad = UDR, honorariosPorHora = 3200, provinciasDondePuedeTrabajar = #{"Santa Fe", "Entre Rios" ,"Corrientes", "Misiones"})
+		
+		var empresa = new EmpresaDeServicios(profesionales = #{juana, melina, rocio, luciana} , honorarioDeReferencia = 3500)
+		
+		assert.notThat(empresa.esDeGenteAcotada())
+	}
+}
